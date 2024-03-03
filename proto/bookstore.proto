@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package bookstore;
+
+// Message untuk buku
+message Book {
+	string id = 1;		// id unique untuk buku
+	string title = 2;	// judul buku
+	string author = 3;	// pengarang buku
+	string isbn = 4;	// isbn buku
+	double price = 5;	// harga buku
+}
+
+// Service untuk mendapatkan buku
+service BookService {
+	// Menambahkan buku baru ke sistem
+	rpc AddBook(Book) returns (Book);
+	// Mendapatkan detail buku berdasarkan ID
+	rpc GetBook(GetBookRequest) returns (Book);
+	// Menghapus buku dari sistem
+	rpc DeleteBook(DeleteBookRequest) returns (DeleteBookResponse);
+	// Menampilkan semua buku
+	rpc ListBooks(Empty) returns (ListBooksResponse);
+}
+
+// Request untuk mendapatkan buku
+message GetBookRequest {
+	string id = 1;
+}
+
+// Request untuk menghapus buku
+message DeleteBookRequest {
+	string id = 1;
+}
+
+// Response untuk menghapus buku
+message DeleteBookResponse {
+	string id = 1;
+	bool success = 2;
+}
+
+// Untuk operasi yang tidak memerlukan input
+message Empty {}
+
+// Response untuk menampilkan semua buku
+message ListBooksResponse {
+	repeated Book books = 1;
+}
